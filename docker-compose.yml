@@ -1,0 +1,43 @@
+version: '3.8'
+
+secrets:
+  ssh_key:
+    file: ~/.ssh/id_rsa
+
+services:
+
+  ####### PHP ######
+  app:
+    build:
+      context: .
+      dockerfile: .docker/dev.docker/php7.dev.dockerfile
+    environment:
+      - TZ=Europe/Moscow
+    ports:
+      - "8001:80"
+    volumes:
+      - ./app:/app
+      - ./:/project
+      - ./.docker/php/php.development.ini:/usr/local/etc/php/php.ini
+      - ./.docker/php/conf.d/xdebug.php7.ini:/usr/local/etc/php/conf.d/xdebug.ini
+    # The export in the next line overrides the defaults for XDebug set in the xdebug.ini for HTTP.
+    command: bash -c 'export XDEBUG_MODE=debug,develop,gcstats,profile,trace XDEBUG_CONFIG="remote_enable=on"; php -S 0.0.0.0:80 -t /app/public'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    secrets:
+      - source: ssh_key
+        target: /home/user/.ssh/id_rsa
+
+  ####### Maria DB ########
+  db:
+    image: mariadb
+    environment:
+      - TZ=Europe/Moscow
+      - MYSQL_ROOT_PASSWORD=i57z9*UIuJQ!
+      - collation-server=utf8mb4_unicode_ci
+      - character-set-server=utf8mb4
+      - MYSQL_DATABASE=gaijin
+    ports:
+      - "5000:3306"
+    volumes:
+      - ./.docker/db-startup:/docker-entrypoint-initdb.d

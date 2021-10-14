@@ -1,0 +1,100 @@
+@import url(https://fonts.googleapis.com/css?family=Nunito);
+
+.waifu-container {
+    padding: 10px;
+}
+
+#waifu {
+    /*max-width: 500px;*/
+}
+
+.crop {
+    height: 500px;
+    /*width: 400px;*/
+    overflow: hidden;
+}
+
+.crop img {
+    height: 100%;
+    width: auto;
+}
+
+#line-container {
+    width: 350px;
+    height: 6px;
+    margin: 6px auto;
+}
+
+.comment {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: relative;
+    background-image: linear-gradient(#fff, #fff),
+    url('/img/reddot16.png');
+    background-size: 100% 100%, 12px 12px;
+    background-position: 0 10px;
+    background-repeat: no-repeat, repeat-x;
+}
+
+.level-0 {
+    padding-left: 16px;
+    background-position: 12px 0, 0 16px;
+}
+
+.level-1 {
+    padding-left: 32px;
+    background-position: 24px 0, 0 16px;
+}
+
+.level-2 {
+    padding-left: 48px;
+    background-position: 36px 0, 0 16px;
+}
+
+.level-3 {
+    padding-left: 64px;
+    background-position: 48px 0, 0 16px;
+}
+
+.level-4 {
+    padding-left: 80px;
+    background-position: 60px 0, 0 16px;
+}
+
+.level-5 {
+    padding-left: 96px;
+    background-position: 72px 0, 0 16px;
+}
+
+.level-6 {
+    padding-left: 112px;
+    background-position: 84px 0, 0 16px;
+}
+
+.level-7 {
+    padding-left: 128px;
+    background-position: 96px 0, 0 16px;
+}
+
+.level-8 {
+    padding-left: 144px;
+    background-position: 108px 0, 0 16px;
+}
+
+.level-9 {
+    padding-left: 160px;
+    background-position: 120px 0, 0 16px;
+}
+
+.more-comments {
+    padding: 10px;
+}
+
+footer {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
