@@ -29,7 +29,7 @@ All make commands can be found in Makefile.
 
 - **make install** Download dependency and prepare database.
 
-- **make reinstall** Redownload dependency and reload database.
+- **make redb** Reload data in database.
 
 ## To change the PHP code
 

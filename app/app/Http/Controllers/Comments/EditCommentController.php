@@ -26,7 +26,7 @@ class EditCommentController extends Controller
     }
 
     /**
-     * Delete comment action handler.
+     * Edit comment action handler.
      *
      * @param int $id Cimment id to delete.
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View

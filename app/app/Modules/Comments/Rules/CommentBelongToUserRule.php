@@ -6,6 +6,9 @@ use App\Modules\Comments\Repositories\CommentsRepository;
 use Illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * Check that comment belong to authorized user.
+ */
 class CommentBelongToUserRule implements Rule
 {
     private CommentsRepository $commentsRepository;

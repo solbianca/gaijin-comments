@@ -2,12 +2,22 @@ var Comments = (function () {
 
     const baseUrl = '/comment';
 
+    deleteButtonListener = function (event) {
+        btn = $(this);
+        btn.prop('disabled', true);
+        btn.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>')
+
+        let commentId = $(this).data('id');
+        deleteComment(commentId, btn);
+    }
+
     let deleteComment = function (id, btn) {
         $.ajax({
             url: baseUrl + '/' + id,
             type: 'DELETE',
             success: function (result) {
-                $('#comment-id-' + id).replaceWith(result);
+                $('#comment-id-' + id).replaceWith($(result).find('#comment-id-' + id));
+                $('#branch-' + id).prop('hidden', false);
             },
             error: function (xhr, error, thrown) {
                 btn.prop('disabled', false);
@@ -39,8 +49,7 @@ var Comments = (function () {
                 createButton.prop('disabled', false);
                 createButton.text('Сохранить');
 
-                let showMoreCommentsButton = parentBranch.find('.show-hidden-comments');
-                showMoreCommentsButton.click();
+                parentBranch.find('#' + commentId).on('click', '.delete-comment-btn', deleteButtonListener);
             },
             error: function (xhr, error, thrown) {
                 modal = $('#info-modal');
@@ -52,7 +61,6 @@ var Comments = (function () {
                 createButton.text('Сохранить');
                 $('#new-comment-modal').modal('hide');
             },
-
         });
     }
 
@@ -63,21 +71,23 @@ var Comments = (function () {
             type: 'PATCH',
             data: data,
             success: function (result) {
-                $('#comment-id-' + id).replaceWith(result);
+                $('#comment-id-' + id).replaceWith($(result).find('#comment-id-' + id));
 
-                let commentId = $(result).attr('id');
+                let commentBranchId = $(result).attr('id');
 
-                let commentBranch = $('#branch-' + commentId)
-                commentBranch.find('#' + commentId).prop('hidden', false);
+                let commentBranch = $('#' + commentBranchId)
+                commentBranch.prop('hidden', false);
 
                 $('#edit-comment-modal').modal('hide');
 
                 let editButton = $('#edit-comment-btn');
                 editButton.prop('disabled', false);
                 editButton.text('Сохранить');
+
+                let commentId = commentBranch.data('id');
+                commentBranch.find('#comment-id-' + commentId).on('click', '.delete-comment-btn', deleteButtonListener)
             },
             error: function (xhr, error, thrown) {
-                console.log(xhr);
                 modal = $('#info-modal');
                 modal.find('.modal-body').text(thrown);
                 modal.modal('show');
@@ -92,16 +102,10 @@ var Comments = (function () {
     }
 
     return {
+        deleteEventListener: function () {
+            $('.delete-comment-btn').on('click', deleteButtonListener);
+        },
         addListeners: function () {
-            $('.delete-comment-btn').on('click', function (event) {
-                btn = $(this);
-                btn.prop('disabled', true);
-                btn.html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>')
-
-                let commentId = $(this).data('id');
-                deleteComment(commentId, btn);
-            });
-
             $('#create-comment-btn').on('click', function (event) {
                 $(this).prop('disabled', true);
                 $(this).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>')
@@ -207,6 +211,7 @@ window.addEventListener('load', function () {
         }
     });
 
+    Comments.deleteEventListener();
     Comments.addListeners();
     Waifu.addListeners();
 });

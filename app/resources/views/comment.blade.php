@@ -16,7 +16,8 @@
     }
 @endphp
 
-<div class="branch" id="branch-{{ $node->getComment()->id }}" @if($isHidden) hidden @endif>
+<div class="branch" id="branch-{{ $node->getComment()->id }}" data-id="{{ $node->getComment()->id }}"
+     @if($isHidden) hidden @endif>
     <div class="comment border-bottom border-gray level-{{ $padLeftLevel }}"
          id="comment-id-{{ $node->getComment()->id }}">
         <div class="comment-dot"></div>
